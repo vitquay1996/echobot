@@ -18,6 +18,7 @@ if (!FB_PAGE_TOKEN) {
 }
 const FB_VERIFY_TOKEN = process.env.FB_VERIFY_TOKEN;
 
+//set up server
 app.set('port', PORT);
 app.listen(app.get('port'));
 app.use(bodyParser.json());
@@ -59,6 +60,7 @@ function callSendAPI(messageData) {
 	});  
 }
 
+// Setting up webhook
 app.get('/fb', function(req, res) {
 	if (req.query['hub.mode'] === 'subscribe' &&
 		req.query['hub.verify_token'] === FB_VERIFY_TOKEN) {
@@ -70,6 +72,7 @@ app.get('/fb', function(req, res) {
 }  
 });
 
+// receive message
 app.post('/fb', function (req, res) {
 	var data = req.body;
 
@@ -86,7 +89,5 @@ app.post('/fb', function (req, res) {
 		}
 
 	}
-
 	res.sendStatus(200);
-
 });
